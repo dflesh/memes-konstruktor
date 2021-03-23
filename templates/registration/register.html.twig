@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <form method="post">
+        <style>
+            * {
+                font-family: 'Nunito Sans', sans-serif;
+            }
+
+            :root {
+                --shadowDark: #D9DDE6;
+                --background: #E4E9F2;
+                --shadowLight: #EFF5FE;
+            }
+
+            .register {
+                border-radius: 25px;
+                padding: 1.5rem;
+                box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+            }
+
+            :root {
+                --shadowDark: #D9DDE6;
+                --background: #E4E9F2;
+                --shadowLight: #EFF5FE;
+            }
+
+            body {
+                background: var(--background);
+            }
+
+            .hero-body {
+                justify-content: center;
+            }
+
+            .login {
+                border-radius: 25px;
+                padding: 1.5rem;
+                box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+            }
+
+            input {
+                background: var(--shadowDark) !important;
+            }
+
+            a {
+                font-weight: 600;
+            }
+            .hero-body {
+                margin-bottom: 10%;
+            }
+        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+        <section class="hero is-fullheight">
+            <div class="hero-body has-text-centered">
+                <div>
+                    {% if error %}
+                        <div class="alert alert-danger" style="color: red; margin-bottom: 10%">{{ error }}</div>
+                    {% endif %}
+                    {% if success %}
+                        <div class="alert alert-danger" style="color: green; margin-bottom: 10%">{{ error }}</div>
+                    {% endif %}
+                    <div class="register">
+                        <img src="https://logoipsum.com/logo/logo-1.svg" width="325px" />
+                        <div class="field">
+                            <label for="inputEmail">Email</label>
+                            <p class="control has-icons-left has-icons-right">
+                                <input class="input is-rounded" type="email" name="email" value="" placeholder="Email" id="inputEmail" required autofocus>
+                                <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                                <span class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                            </p>
+                        </div>
+                        <label for="inputPassword">Password</label>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input is-rounded" type="password" placeholder="Password" name="password" id="inputPassword" required>
+                                <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                            </p>
+                        </div>
+                        <br />
+                        <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit" id="create">
+                            Create account
+                        </button>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+        </section>
+    </form>
+{% endblock %}

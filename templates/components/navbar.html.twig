@@ -1,0 +1,93 @@
+{% block body %}
+    <style>
+        .navbar .navbar-item {
+            color: deepskyblue;
+            margin-bottom: 25px;
+        }
+
+        .navbar{
+            background: #191b1f;
+            height: 50px;
+            padding: 1.5rem;
+            box-shadow: 4px 4px 8px var(--shadowDark), -4px -4px 8px var(--shadowLight);
+            color: deepskyblue;
+        }
+        :root {
+            --shadowDark: #00BFFF;
+            --background: #E4E9F2;
+            --shadowLight: #00BFFF;
+        }
+
+        .navbar .navbar-link {
+            color: deepskyblue;
+        }
+
+        .navbar .navbar-link:hover{
+            background: transparent;
+            color: deepskyblue;
+        }
+
+        .navbar .navbar-item.is-active {
+            color: deepskyblue;
+            font-weight: 700;
+        }
+
+        .navbar .navbar-item:hover {
+            background: transparent;
+            color: deepskyblue;
+        }
+
+        .navbar .navbar-item a {
+            margin-left: 1rem;
+            color: deepskyblue;
+        }
+
+        .navbar .navbar-dropdown {
+            background: #191b1f;
+        }
+    </style>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="navbar-item" href="{{ path('app_workshop') }}">
+                            Workshop
+                        </a>
+
+                        <a class="navbar-item" href="{{ path('app_gallery') }}">
+                            Gallery
+                        </a>
+
+                        <a class="navbar-item" href="{{ path('app_about') }}">
+                            About/Contacts
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        {% if app.user %}
+                            <a class="getLoggedUserProfile navbar-item">Profile</a>
+                            <form class="fooForm" method="POST" action="{{ path('app_user_profile', {'id': app.user.id}) }}" style="display:none">
+                                <input name="id" type="hidden" value="{{ app.user.id }}">
+                            </form>
+                            <script>
+                                $(document).on("click",".getLoggedUserProfile",function() {
+                                    $('.fooForm').submit();
+                                })
+                            </script>
+                            <a class="navbar-item" href="{{ path('app_logout') }}">LogOut</a>
+                        {% else %}
+                            <a class="navbar-item" href="/register">Registration</a>
+                            <a class="navbar-item" href="/login">LogIn</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}

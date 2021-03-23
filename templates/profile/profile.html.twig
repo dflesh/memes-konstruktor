@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block body %}
+    <style>
+        #editProfileBtn {
+            max-width: 50%;
+            margin-left: 25%;
+        }
+        #avatar {
+            padding: 0.5rem;
+            box-shadow: 4px 4px 8px var(--shadowDark), -4px -4px 8px var(--shadowLight);
+        }
+        .card {
+            background: #191b1f !important;
+            color: deepskyblue !important;
+            padding: 0.5rem;
+            box-shadow: 4px 4px 8px var(--shadowDark), -4px -4px 8px var(--shadowLight);
+            margin-right: 5%;
+        }
+    </style>
+    <!-- About -->
+    <section class="section" id="profile">
+        <!-- Title -->
+        <div class="section-heading">
+            <h3 class="title is-2" style="color: deepskyblue">User - {{ user.email }} - profile</h3>
+        </div>
+
+        <div class="columns has-same-height is-gapless">
+            <div class="column">
+                <!-- Profile -->
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="title is-4">Profile</h3>
+
+                        <div class="content">
+                            <table class="table-profile">
+                                <tr>
+                                    <th colspan="1"></th>
+                                    <th colspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    {% if user.id == app.user.id %}
+                                        <td>{{ user.email }}</td>
+                                    {% else %}
+                                        <td>******</td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>Nickname:</td>
+                                    <td>{{ user.nickname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Uploaded Templates Gallery:</td>
+                                    <td><strong style="color: red !important;">TODO Uploaded Templates Gallery LINK</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Created Memes Gallery:</td>
+                                    <td><strong style="color: red !important;">TODO Created Memes Gallery LINK</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        {% if user.id == app.user.id %}
+                            <a class="button is-block is-fullwidth is-primary is-medium is-rounded" href="{{ path('app_edit_user_profile') }}" id="editProfileBtn">Изменить профиль</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <!-- Profile picture -->
+                <div class="card" id="avatar">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ gallery_avatars }}{{ user.avatar }}" alt="Placeholder image">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

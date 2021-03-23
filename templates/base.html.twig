@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}{% endblock %}
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+            <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+        {% endblock %}
+
+        {% block javascripts %}{% endblock %}
+    </head>
+    <style>
+        html {
+            font-family: 'Nunito Sans', sans-serif;
+            color: #3b7adf;
+        }
+        a {
+            color: #3b7adf;
+        }
+
+        .button {
+            background: deepskyblue !important;
+            color: #191b1f !important;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #3b7adf;
+        }
+        .label {
+            color: deepskyblue;
+        }
+        #file_upload_form_avatar{
+
+        }
+        .title {
+            color: deepskyblue;
+        }
+        .button {
+            background: deepskyblue;
+            color: #191b1f
+        }
+    </style>
+    <body style="background: #191b1f; color: #e4e2ff; display: flex; min-height: 100vh; flex-direction: column">
+    {% include('components/navbar.html.twig') %}
+        <div id="container">
+            <div id="content" style="flex: 1 0 auto;">
+                {% block body %}{% endblock %}
+            </div>
+            {% include('components/footer.html.twig') %}
+        </div>
+    </body>
+</html>
+

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}home{% endblock %}
+
+{% block body %}
+    <br>
+    <h1 style="text-align: center" class="title">Add new template</h1>
+    <br>
+    {{ form_start(newTemplateForm) }}
+    {{ form_row(newTemplateForm.templateFile) }}
+    {{ form_row(newTemplateForm.name) }}
+    {{ form_row(newTemplateForm.description) }}
+    {{ form_row(newTemplateForm.save, { 'attr': {'class': 'button is-block is-fullwidth is-primary is-medium is-rounded'} }) }}
+    {{ form_end(newTemplateForm) }}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block body %}
+    <!-- About -->
+    <section class="section" style="margin-left: 25%; margin-right: 25%" id="about">
+        <!-- Title -->
+        <div class="section-heading">
+            <h3 class="title is-2" style="color: #00bfff">User: {{ app.user.email }} profile card</h3>
+            <br>
+        </div>
+
+        <style>
+            :root {
+                --shadowDark: #00bfff;
+                --background: #E4E9F2;
+                --shadowLight: #00BFFF;
+            }
+            .table-profile{
+                color: deepskyblue;
+            }
+            .card {
+                background: #191b1f; border-radius: 25px;
+                padding: 1.5rem;
+                box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight); color: deepskyblue
+            }
+        </style>
+        <div class="columns has-same-height is-gapless">
+            <div class="column">
+                <!-- Profile -->
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="title is-4" style="color: deepskyblue">Info</h3>
+
+                        <div class="content">
+                            <table class="table-profile">
+                                <tr>
+                                    <th colspan="1"></th>
+                                    <th colspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td>{{ app.user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Nickname:</td>
+                                    <td>{{ app.user.nickname }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        {{ form_start(fileUploadForm) }}
+                        {{ form_row(fileUploadForm.avatar) }}
+                        {{ form_row(fileUploadForm.nickname) }}
+                        {{ form_row(fileUploadForm.save, { 'attr': {'class': 'button is-block is-fullwidth is-primary is-medium is-rounded'} }) }}
+                        {{ form_end(fileUploadForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
