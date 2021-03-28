@@ -58,7 +58,18 @@
                                 </tr>
                                 <tr>
                                     <td>Created Memes Gallery:</td>
-                                    <td><strong style="color: red !important;">TODO Created Memes Gallery LINK</strong></td>
+                                    <td>
+                                        <a class="getUploaderProfile" onclick="getUploaderProfile(event, {{ user.id }})">Created memes by user gallery</a>
+                                        <form class="fooForm{{user.id}}" method="POST" action="{{ path('app_user_gallery', {'id': user.id}) }}" style="display:none">
+                                            <input name="id" type="hidden" value="{{user.id}}">
+                                        </form>
+                                        <script>
+                                            function getUploaderProfile(event, id) {
+                                                let postFormId = '.fooForm'+id;
+                                                $(postFormId).submit();
+                                            }
+                                        </script>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

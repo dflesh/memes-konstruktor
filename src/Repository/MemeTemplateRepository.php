@@ -19,14 +19,10 @@ class MemeTemplateRepository extends ServiceEntityRepository
         parent::__construct($registry, MemeTemplate::class);
     }
 
-    // /**
-    //  * @return MemeTemplate[] Returns an array of MemeTemplate objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByName($value)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
+            ->andWhere('m.name = :val')
             ->setParameter('val', $value)
             ->orderBy('m.id', 'ASC')
             ->setMaxResults(10)
@@ -34,17 +30,26 @@ class MemeTemplateRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?MemeTemplate
+
+    public function findOneByUpdatedAt($value): ?MemeTemplate
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
+            ->andWhere('m.updated_at = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function findByFilter($name)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.name like :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

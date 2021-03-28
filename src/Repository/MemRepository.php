@@ -19,14 +19,10 @@ class MemRepository extends ServiceEntityRepository
         parent::__construct($registry, Mem::class);
     }
 
-    // /**
-    //  * @return Mem[] Returns an array of Mem objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByName($value)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
+            ->andWhere('m.name = :val')
             ->setParameter('val', $value)
             ->orderBy('m.id', 'ASC')
             ->setMaxResults(10)
@@ -34,17 +30,24 @@ class MemRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Mem
+    public function findByUpdatedAt($value): ?Mem
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
+            ->andWhere('m.updated_at = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function findByCreatorId($value)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.creator = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

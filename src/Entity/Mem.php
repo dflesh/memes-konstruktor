@@ -100,6 +100,10 @@ class Mem
         return $this;
     }
 
+    public function __construct() {
+        $this->updated_at = new \DateTime();
+    }
+
     public function getCreator(): ?User
     {
         return $this->creator;

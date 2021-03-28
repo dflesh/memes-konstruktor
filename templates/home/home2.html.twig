@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Workshop{% endblock %}
+
+{% block body %}
+    <style>
+        #templateContainer {
+            margin-left: 10%;
+            margin-right: 10%;
+            background: #191b1f; border-radius: 25px;
+            padding: 1.5rem;
+            box-shadow: 4px 4px 8px var(--shadowDark), -4px -4px 8px var(--shadowLight);
+            color: deepskyblue;
+        }
+        .card {
+            margin-left: 5%;
+            margin-right: 5%;
+            background: #191b1f; border-radius: 25px;
+            padding: 1rem;
+            box-shadow: 4px 4px 8px var(--shadowDark), -4px -4px 8px var(--shadowLight);
+            color: deepskyblue;
+        }
+        #addMemeTemplate {
+            margin-left: 37%;
+            width: 25%;
+            margin-bottom: 1%;
+        }
+    </style>
+    <br>
+    <h1 style="text-align: center;" class="title">Workshop</h1>
+    <div id="templateContainer">
+        <a class="button is-block is-fullwidth is-primary is-medium is-rounded" href="{{ path('app_add_Template') }}" id="addMemeTemplate">Add template</a>
+        <div class="columns is-multiline">
+            {% for template in templates %}
+                <div class="column is-one-quarter">
+                    <div class="card" id="card" style="background: #191b1f;">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="{{ asset('/images/templates/') }}{{ template.template }}" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <section>
+                                    <div class="media-left">
+                                        Uploaded by user: <a class="getUploaderProfile" onclick="getUploaderProfile(event, {{ template.uploader.id }})">{{ template.uploader.nickname }}</a>
+                                        <form class="fooForm{{template.uploader.id}}" method="POST" action="{{ path('app_user_profile', {'id': template.uploader.id}) }}" style="display:none">
+                                            <input name="id" type="hidden" value="{{template.uploader.id}}">
+                                        </form>
+                                        <script>
+                                            function getUploaderProfile(event, id) {
+                                                let postFormId = '.fooForm'+id;
+                                                $(postFormId).submit();
+                                            }
+                                            // $(document).on("click",".getUploaderProfile",function() {
+                                            //     $('.fooForm').submit();
+                                            // })
+                                        </script>
+                                    </div>
+                                </section>
+                                <div class="media-content">
+                                    <br>
+                                    Template title: {{ template.name }}
+                                </div>
+                                Description:
+                                {{template.description}}
+                                <br>
+                                Created at:
+                                <time datetime="2016-1-1">{{ template.updatedAt|date('d-m-Y') }}</time>
+                            </div>
+                            <div class="content">
+                                <span class="button is-block is-fullwidth is-primary is-medium is-rounded is-link modal-button" data-target="{{ template.id }}" onclick="getTemplateId(event, {{ template.id }})">Create Meme</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .dragE {
+                        position: absolute;
+                    }
+                    /*#modalPicContainer {*/
+                    /*    max-width: 640px;*/
+                    /*    max-height: 640px;*/
+                    /*}*/
+                </style>
+                <!-- Image modal-->
+                <div id="{{ template.id }}" class="modal modal-fx-superScaled">
+                    <div class="modal-background" style="z-index: -2"></div>
+                    <div id="modalPicContainer">
+                        <div class="modal-content" id="screenDiv_{{ template.id }}">
+                            <div class="dragE ui-widget" id="text1_{{ template.id }}">
+                                text1
+                            </div>
+                            <div class="dragE ui-widget" id="text2_{{ template.id }}">
+                                text2
+                            </div>
+                            <figure class="image is-4by3" style="z-index: -1">
+                                <img src="{{ asset('/images/templates/') }}{{ template.template }}" id="img{{ template.id }}" alt="Placeholder image">
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <table class="table-profile">
+                                <tr>
+                                    <td>
+                                        <input class="input is-rounded" id="inputText1_{{ template.id }}" placeholder="text1" style="z-index: 9999">
+                                    </td>
+                                    <td>
+                                        <input class="input is-rounded" id="inputText2_{{ template.id }}" placeholder="text2" style="z-index: 9999">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <table class="table-profile">
+                                <tr>
+                                    <td>
+                                        <a id="download_{{ template.id }}" download="superMeme.png">
+                                            <button class="button is-link modal-button is-rounded" type="button" onclick="screenshot({{ template.id }})">Download</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="button is-link modal-button is-rounded" onclick="sendToServer()">Save in gallery</span>
+                                    </td>
+                                    <td>
+                                        <span class="button is-link modal-button is-rounded" data-target="">Share in socials</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+    <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+    <script>
+        function sendToServer() {
+            //  НЕ ЗАБУДЬ БЛЯТЬ СДЕЛАТЬ НАХУЙ
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/saveImage');
+            if (xhr.status !== 200) {
+                // обработать ошибку
+                alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+            } else {
+                // вывести результат
+                alert( xhr.responseText ); // responseText -- текст ответа.
+            }
+            xhr.send(image);
+        }
+        let getCanvas;
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        let image;
+        function screenshot(id) {
+            let divId = '#screenDiv_' + id;
+            let linkId = 'download_' + id;
+            let download = document.getElementById(linkId);
+            console.log(download);
+            html2canvas($(divId)).then(function(canvas) {
+                // Export canvas as a blob
+                canvas.toBlob(function(blob) {
+                    // Generate file download
+                    image = canvas.toDataURL("image/png", 1).replace("image/png", "image/octet-stream");
+                    download.setAttribute("href", image);
+                    //  НЕ ЗАБУДЬ БЛЯТЬ СДЕЛАТЬ НАХУЙ
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/saveImage');
+                    if (xhr.status !== 200) {
+                        // обработать ошибку
+                        alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+                    } else {
+                        // вывести результат
+                        alert( xhr.responseText ); // responseText -- текст ответа.
+                    }
+                    xhr.send(image);
+                });
+            });
+        }
+        function getTemplateId(event, id) {
+            let firstTextInput = '#inputText1_' + id;
+            let secondTextInput = '#inputText2_' + id;
+            let firstTextBox = '#text1_' + id;
+            let secondTextBox = '#text2_' + id;
+            $(firstTextInput).bind('input', function (){
+                $(firstTextBox).html($(this).val())
+            });
+            $(secondTextInput).bind('input', function (){
+                $(secondTextBox).html($(this).val())
+            });
+        }
+        $('.dragE').draggable({
+            containment: "parent"
+        });
+    </script>
+    <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js'></script>
+{% endblock %}
