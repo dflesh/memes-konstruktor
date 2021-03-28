@@ -33,10 +33,8 @@ class AccountController extends AbstractController
         $user = $this->getUser();
         $user = $this->userRepository->findOneByEmail($user->getUsername());
         $user->setAvatar(null);
-        dump($user);
         $form = $this->createForm(FileUploadFormType::class, $user);
         if ($request->isMethod('GET')) {
-            dump('get');
             return $this->render('profile/edit_profile.html.twig', [
                 'gallery_avatars' => '/images/avatars/',
                 'fileUploadForm' => $form->createView(),
@@ -70,7 +68,6 @@ class AccountController extends AbstractController
             if ($nickname != null)
                 $user->setNickname($nickname);
 
-            dump($user);
             // ... persist the $user variable or any other work and redirect
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
@@ -95,8 +92,6 @@ class AccountController extends AbstractController
     public function getProfile(Request $request): Response {
         $id = $request->request->get('id');
         $user = $this->userRepository->findOneById($id);
-        dump('id:'.$id);
-        dump($user);
         return $this->render('profile/profile.html.twig', [
             'gallery_avatars' => '/images/avatars/',
             'user' => $user

@@ -45,22 +45,19 @@ class HomeController extends AbstractController
         $data = $request->get('data');
         $repository = $this -> getDoctrine() -> getRepository(MemeTemplate::class);
         $templates = $repository->findAll();
+        $form = $this->createForm(SearchFormType::class, $data);
+        $form->handleRequest($request);
+        $formData = ($form->getData());
         $query = null;
-
-        if ($data != null) {
-            $form = $this->createForm(SearchFormType::class, $data);
-            $form->handleRequest($request);
-            $formData = ($form->getData());
+        if ($formData != null) {
             $query = $formData->getQ('q');
         }
         else $form = $this->createForm(SearchFormType::class, null);
 
         if ($query != null)
             if ($query != '') {
-                dump($query);
                 $filter = '%'.$query.'%';
                 $templates = $repository->findByFilter($filter);
-                dump($templates);
             }
         else {
             $templates = $repository->findAll();
