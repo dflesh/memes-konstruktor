@@ -32,7 +32,7 @@
                 <!-- Profile -->
                 <div class="card">
                     <div class="card-content">
-                        <h3 class="title is-4">Profile</h3>
+                        <h3 class="title is-4"><u>Profile</u></h3>
 
                         <div class="content">
                             <table class="table-profile">
@@ -41,7 +41,7 @@
                                     <th colspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <td>Email:</td>
+                                    <td><u>Email:</u></td>
                                     {% if user.id == app.user.id %}
                                         <td>{{ user.email }}</td>
                                     {% else %}
@@ -49,15 +49,11 @@
                                     {% endif %}
                                 </tr>
                                 <tr>
-                                    <td>Nickname:</td>
+                                    <td><u>Nickname:</u></td>
                                     <td>{{ user.nickname }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Uploaded Templates Gallery:</td>
-                                    <td><strong style="color: red !important;">TODO Uploaded Templates Gallery LINK</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Created Memes Gallery:</td>
+                                    <td><u>Created Memes Gallery Link:</u></td>
                                     <td>
                                         <a class="getUploaderProfile" onclick="getUploaderProfile(event, {{ user.id }})">Created memes by user gallery</a>
                                         <form class="fooForm{{user.id}}" method="POST" action="{{ path('app_user_gallery', {'id': user.id}) }}" style="display:none">
@@ -75,7 +71,7 @@
                         </div>
                         <br>
                         {% if user.id == app.user.id %}
-                            <a class="button is-block is-fullwidth is-primary is-medium is-rounded" href="{{ path('app_edit_user_profile') }}" id="editProfileBtn">Изменить профиль</a>
+                            <a class="button is-block is-fullwidth is-primary is-medium is-rounded" href="{{ path('app_edit_user_profile') }}" id="editProfileBtn">Edit profile</a>
                         {% endif %}
                     </div>
                 </div>

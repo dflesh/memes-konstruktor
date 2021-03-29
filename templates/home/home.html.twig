@@ -62,7 +62,7 @@
                         <div class="content">
                             <section>
                                 <div class="media-left">
-                                    Uploaded by user: <a class="getUploaderProfile" onclick="getUploaderProfile(event, {{ template.uploader.id }})">{{ template.uploader.nickname }}</a>
+                                    <u>Uploaded by user:</u> <a class="getUploaderProfile" onclick="getUploaderProfile(event, {{ template.uploader.id }})">{{ template.uploader.nickname }}</a>
                                     <form class="fooForm{{template.uploader.id}}" method="POST" action="{{ path('app_user_profile', {'id': template.uploader.id}) }}" style="display:none">
                                         <input name="id" type="hidden" value="{{template.uploader.id}}">
                                     </form>
@@ -76,12 +76,12 @@
                             </section>
                             <div class="media-content">
                                 <br>
-                                Template title: {{ template.name }}
+                                <u>Template title:</u> {{ template.name }}
                             </div>
-                            Description:
+                            <u>Description:</u>
                             {{template.description}}
                             <br>
-                            Created at:
+                                    <u>Created at:</u>
                             <time datetime="2016-1-1">{{ template.updatedAt|date('d-m-Y') }}</time>
                         </div>
                         <div class="content">
