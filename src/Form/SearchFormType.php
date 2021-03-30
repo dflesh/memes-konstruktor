@@ -21,9 +21,10 @@ class SearchFormType extends AbstractType
         $builder
             ->add('q',TextType::class, [
                 'label' => false,
+                'empty_data' => '',
                 'required' => false,
                 'attr' => [
-                    'placeholder'=>'Search'
+                    'placeholder'=>'Search',
                 ]
             ])
             ->add('search', SubmitType::class, [
